@@ -6,16 +6,29 @@ let slideIndex = 0;
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 
 document.getElementById("contact").addEventListener("contentUpdated", () => {
-    const emailText = document.getElementById("emailText");
+    let emailText;
+    const revealButton = document.getElementById("revealButton");
     const copyButton = document.getElementById("copyButton");
 
+    revealButton.addEventListener("click", () => {
+        const email = "0zoltanmolnar" + String.fromCharCode(64) + "gmail.com";
+        const emailLink = document.createElement("a");
+        emailLink.setAttribute("id", "emailText");
+        emailLink.classList.add("text-gray-400");
+        emailLink.href = "mailto:" + email;
+        emailLink.textContent = email;
+        document.getElementById("emailContainer").appendChild(emailLink);
+        emailText = email;
+
+        revealButton.classList.replace("flex", "hidden");
+        copyButton.classList.replace("hidden", "flex");
+
+    });
 
     copyButton.addEventListener("click", () => {
         const textCopied = document.getElementById("textCopied");
         
-        emailText.select();
-        emailText.setSelectionRange(0, 99999); // For mobile devices
-        navigator.clipboard.writeText(emailText.value)
+        navigator.clipboard.writeText(emailText)
             .then(() => textCopied.style.display = "flex")
             .catch(error => console.error("Error copying text:", error));
     });
@@ -73,16 +86,5 @@ document.getElementById("projects").addEventListener("contentUpdated", () => {
 });
 
 function showEmail() {
-    const email = "0zoltanmolnar" + String.fromCharCode(64) + "gmail.com";
 
-    const emailLink = document.createElement("a");
-    emailLink.setAttribute("id", "emailText");
-    emailLink.classList.add("mr-0 md:mr-2 text-gray-400");
-    emailElement.href = "mailto:" + email;
-    emailLink.textContent = email;
-    document.getElementById("emailContainer").appendChild(emailLink);
-
-
-    const copyButton = document.getElementById("copyButton");
-    copyButton.classList.replace("hidden", "flex");
   }
