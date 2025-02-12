@@ -569,14 +569,8 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-7 {
-    width: calc(var(--spacing) * 7);
-  }
   .w-8 {
     width: calc(var(--spacing) * 8);
-  }
-  .w-12 {
-    width: calc(var(--spacing) * 12);
   }
   .w-20 {
     width: calc(var(--spacing) * 20);
@@ -605,8 +599,8 @@
   .snap-y {
     scroll-snap-type: y var(--tw-scroll-snap-strictness);
   }
-  .snap-mandatory {
-    --tw-scroll-snap-strictness: mandatory;
+  .snap-proximity {
+    --tw-scroll-snap-strictness: proximity;
   }
   .snap-start {
     scroll-snap-align: start;
@@ -684,12 +678,6 @@
   .pt-1 {
     padding-top: calc(var(--spacing) * 1);
   }
-  .pt-4 {
-    padding-top: calc(var(--spacing) * 4);
-  }
-  .pt-5 {
-    padding-top: calc(var(--spacing) * 5);
-  }
   .pt-10 {
     padding-top: calc(var(--spacing) * 10);
   }
@@ -698,12 +686,6 @@
   }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
-  }
-  .pb-3 {
-    padding-bottom: calc(var(--spacing) * 3);
-  }
-  .pb-4 {
-    padding-bottom: calc(var(--spacing) * 4);
   }
   .text-center {
     text-align: center;
@@ -779,14 +761,20 @@
       }
     }
   }
+  .sm\:text-4xl {
+    @media (width >= 40rem) {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+  }
   .md\:mx-20 {
     @media (width >= 48rem) {
       margin-inline: calc(var(--spacing) * 20);
     }
   }
-  .md\:w-20 {
+  .md\:snap-mandatory {
     @media (width >= 48rem) {
-      width: calc(var(--spacing) * 20);
+      --tw-scroll-snap-strictness: mandatory;
     }
   }
   .md\:flex-row {
@@ -794,31 +782,9 @@
       flex-direction: row;
     }
   }
-  .md\:pt-10 {
-    @media (width >= 48rem) {
-      padding-top: calc(var(--spacing) * 10);
-    }
-  }
-  .md\:pt-12 {
-    @media (width >= 48rem) {
-      padding-top: calc(var(--spacing) * 12);
-    }
-  }
   .md\:pt-16 {
     @media (width >= 48rem) {
       padding-top: calc(var(--spacing) * 16);
-    }
-  }
-  .md\:text-3xl {
-    @media (width >= 48rem) {
-      font-size: var(--text-3xl);
-      line-height: var(--tw-leading, var(--text-3xl--line-height));
-    }
-  }
-  .md\:text-4xl {
-    @media (width >= 48rem) {
-      font-size: var(--text-4xl);
-      line-height: var(--tw-leading, var(--text-4xl--line-height));
     }
   }
   .\32 xl\:mx-80 {
@@ -841,6 +807,9 @@
     justify-content: center;
     background-color: var(--color-gray-700);
     width: 26rem;
+    @media (max-width: 450px) {
+      width: 20rem;
+    }
     border-radius: 1rem;
     & .slideElements {
       display: flex;
@@ -851,7 +820,11 @@
         justify-content: center;
         align-items: center;
         height: 26rem;
-        width: 26em;
+        width: 26rem;
+        @media (max-width: 450px) {
+          height: 20rem;
+          width: 20rem;
+        }
         overflow: hidden;
         border-radius: 1rem;
         & .slide {
@@ -861,6 +834,9 @@
       & .slideButton {
         & .slideIcon {
           height: 5rem;
+          @media (max-width: 450px) {
+            height: 4rem;
+          }
         }
       }
     }
@@ -870,16 +846,27 @@
       align-items: center;
       width: 26rem;
       height: 4rem;
+      @media (max-width: 450px) {
+        width: 20rem;
+        height: 3.5rem;
+      }
       gap: 1rem;
       & .slideLink {
         height: 3rem;
         width: 11rem;
+        @media (max-width: 450px) {
+          height: 2.4rem;
+          width: 8rem;
+        }
         display: flex;
         justify-content: center;
         align-items: center;
         background: var(--color-gray-800);
         & .slideLinkIcon {
           height: 2rem;
+          @media (max-width: 450px) {
+            height: 1.5rem;
+          }
         }
         &:active, &:hover {
           background-color: var(--color-gray-900);
