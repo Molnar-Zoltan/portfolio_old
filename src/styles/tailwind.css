@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+:root {
+    @media (max-width: 768px) {
+        font-size: 75%;
+    }
+}
+
 .projectContainer {
     
     text-align: center;
@@ -12,6 +18,8 @@
         justify-content: center;
         background-color: var(--color-gray-700);
         width: 26rem;
+
+
         border-radius: 1rem;
 
         & .slideElements {
@@ -26,6 +34,7 @@
                 align-items: center;
                 height: 26rem;
                 width: 26em;
+
                 overflow: hidden;
                 border-radius: 1rem;
     
