@@ -8,15 +8,31 @@
 </head>
 <body class="bg-gray-950 text-gray-100">
     <header>
-        <nav class="bg-gray-900 py-3 fixed z-50 w-full text-xl">
-            <ul class="w-full flex font-bold justify-center align-middle gap-6">
+        <nav id="navbar" class="bg-gray-900 py-3 fixed z-50 w-full text-xl flex justify-end md:justify-center">
+
+             <!-- Hamburger Button -->
+            <button id="hamburgerButton" class="md:hidden focus:outline-none mx-5">
+                <svg id="hamburgerIcon" class="w-12 fill-gray-100 hover:fill-red-600 active:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M92-199v-105.33h776.67V-199H92Zm0-228.67v-104.66h776.67v104.66H92Zm0-228V-761h776.67v105.33H92Z"/></svg>
+                <svg id="closeIcon" class="hidden w-12 fill-gray-100 hover:fill-red-600 active:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M251.33-178 178-251.33 406.67-480 178-708.67 251.33-782 480-553.33 708.67-782 782-708.67 553.33-480 782-251.33 708.67-178 480-406.67 251.33-178Z"/></svg>
+            </button>
+
+            <!-- Desktop Menu -->
+            <ul class="w-full hidden md:flex font-bold justify-center align-middle gap-6">
                 <li><a class="hover:text-red-600 active:text-red-600" href="#about">About</a></li>
                 <li><a class="hover:text-red-600 active:text-red-600" href="#skills">Skills</a></li>
                 <li><a class="hover:text-red-600 active:text-red-600" href="#projects">Projects</a></li>
                 <li><a class="hover:text-red-600 active:text-red-600" href="#contact">Contact</a></li>
             </ul>
-        </nav>
 
+             <!-- Mobile Menu -->
+            <ul id="mobileMenu" class="flex-col text-3xl font-bold gap-6 py-5 pr-5 justify-center items-end hidden">
+                <li><a class="hover:text-red-600 active:text-red-600" href="#about">About</a></li>
+                <li><a class="hover:text-red-600 active:text-red-600" href="#skills">Skills</a></li>
+                <li><a class="hover:text-red-600 active:text-red-600" href="#projects">Projects</a></li>
+                <li><a class="hover:text-red-600 active:text-red-600" href="#contact">Contact</a></li>
+            </ul>
+       
+        </nav>
     </header>
     <main class="flex flex-col h-svh sm:snap-y sm:snap-mandatory overflow-y-scroll scroll-smooth sm:snap-always">
         <section class="flexl min-h-screen min-w-96 snap-start">
@@ -40,8 +56,6 @@
             </div>
         </section>
     </main>
-
-
     <footer class="bg-gray-900 flex flex-col font-bold min-h-2 justify-center items-center py-4 gap-2">
         <div class="flex gap-4">
             <a title="GitHub" href="https://github.com/Molnar-Zoltan/" class="hover:fill-gray-400 active:fill-gray-400 fill-gray-100">

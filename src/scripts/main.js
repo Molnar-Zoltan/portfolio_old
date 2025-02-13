@@ -1,7 +1,6 @@
+const hamburgerButton = document.getElementById('hamburgerButton');
 
 let slideIndex = 0;
-
-
 
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 
@@ -85,6 +84,25 @@ document.getElementById("projects").addEventListener("contentUpdated", () => {
 
 });
 
-function showEmail() {
 
-  }
+
+hamburgerButton.addEventListener('click', () => {
+
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const closeIcon = document.getElementById('closeIcon');
+    const navbar = document.getElementById("navbar");
+
+    mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('flex');
+    hamburgerIcon.classList.toggle('hidden');
+    closeIcon.classList.toggle('hidden');
+
+    if (hamburgerIcon.classList.contains("hidden")) {
+        navbar.classList.replace("justify-end", "justify-between")
+    }
+    else {
+        navbar.classList.replace("justify-between", "justify-end")
+    }
+
+});
