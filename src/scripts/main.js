@@ -3,6 +3,7 @@ const sections = document.querySelectorAll("section");
 const menuButtons = document.querySelectorAll(".menuButton");
 const menuButtonsMobile = document.querySelectorAll(".menuButtonMobile");
 const mobileMenu = document.getElementById('mobileMenu');
+const footer = document.getElementById("footer");
 
 let slideIndex = 0;
 
@@ -120,13 +121,26 @@ const observer = new IntersectionObserver(entries => {
 
         if (entry.isIntersecting) {
 
+            const lastSection = sections[sections.length-1].id;
+
             clearMenuButtons(menuButtons);
             clearMenuButtons(menuButtonsMobile);
 
             setButtonActive(menuButtons, entry.target.id);
             setButtonActive(menuButtonsMobile, entry.target.id);
-
             // Need to do it for both desktop and mobile in case the user resizes the browser window
+
+
+            footer.style.display = entry.target.id == lastSection ? "flex" : "none"; // This makes the footer only visible in the last section
+
+            if (entry.target.id == lastSection) { // Scroll automatically to the footer  after reaching the last section
+
+                setTimeout(() => {
+                    footer.scrollIntoView({
+                        behavior: "smooth"
+                    });
+                }, 200);
+            }
 
         }
     });
@@ -135,7 +149,7 @@ const observer = new IntersectionObserver(entries => {
 sections.forEach(section => observer.observe(section));
 
 
-function clearMenuButtons(buttons) { // Makes all menu buttons inactive 
+function clearMenuButtons(buttons) { // Make all menu buttons inactive 
 
     buttons.forEach(button => {
         button.classList.remove("activeButton");
