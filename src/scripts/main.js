@@ -1,10 +1,15 @@
 const hamburgerButton = document.getElementById('hamburgerButton');
+const sections = document.querySelectorAll("section");
+const menuButtons = document.querySelectorAll(".menuButton");
+const menuButtonsMobile = document.querySelectorAll(".menuButtonMobile");
+const mobileMenu = document.getElementById('mobileMenu');
 
 let slideIndex = 0;
 
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 
 document.getElementById("contact").addEventListener("contentUpdated", () => {
+
     let emailText;
     const revealButton = document.getElementById("revealButton");
     const copyButton = document.getElementById("copyButton");
@@ -35,6 +40,7 @@ document.getElementById("contact").addEventListener("contentUpdated", () => {
 });
 
 document.getElementById("projects").addEventListener("contentUpdated", () => {
+    
     const slideNext = document.getElementById("slideNext");
     const slidePrev = document.getElementById("slidePrev");
     const slides = document.querySelectorAll(".slide");
@@ -88,7 +94,6 @@ document.getElementById("projects").addEventListener("contentUpdated", () => {
 
 hamburgerButton.addEventListener('click', () => {
 
-    const mobileMenu = document.getElementById('mobileMenu');
     const hamburgerIcon = document.getElementById('hamburgerIcon');
     const closeIcon = document.getElementById('closeIcon');
     const navbar = document.getElementById("navbar");
@@ -106,3 +111,47 @@ hamburgerButton.addEventListener('click', () => {
     }
 
 });
+
+
+
+const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            clearMenuButtons(menuButtons);
+            clearMenuButtons(menuButtonsMobile);
+
+            setButtonActive(menuButtons, entry.target.id);
+            setButtonActive(menuButtonsMobile, entry.target.id);
+
+            // Need to do it for both desktop and mobile in case the user resizes the browser window
+
+        }
+    });
+}, { threshold: 0.5 }); // Adjust threshold as needed (0.5 means 50% visibility)
+
+sections.forEach(section => observer.observe(section));
+
+
+function clearMenuButtons(buttons) { // Makes all menu buttons inactive 
+
+    buttons.forEach(button => {
+        button.classList.remove("activeButton");
+    });
+
+}
+
+function setButtonActive(buttons, sectionID) { // Adds the activeButton class to the menu button that belongs to the current section
+
+    for (const button of buttons) {
+
+        const menuHref = button.href;
+        if (menuHref.includes(sectionID)) {
+            button.classList.add("activeButton");
+            break;
+        }                
+    }
+
+}

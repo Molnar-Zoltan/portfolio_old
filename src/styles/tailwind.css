@@ -122,5 +122,9 @@
         }
     }
 
+}
 
+
+.activeButton {
+    color: var(--color-red-600);
 }
