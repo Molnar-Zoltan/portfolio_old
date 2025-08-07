@@ -116,13 +116,6 @@ window.addEventListener("DOMContentLoaded", () => {
         hamburgerIcon.classList.toggle('hidden');
         closeIcon.classList.toggle('hidden');
 
-        if (hamburgerIcon.classList.contains("hidden")) {
-            navbar.classList.replace("justify-end", "justify-between")
-        }
-        else {
-            navbar.classList.replace("justify-between", "justify-end")
-        }
-
     });
 
 
