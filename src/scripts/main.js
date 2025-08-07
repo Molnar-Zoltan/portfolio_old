@@ -1,171 +1,187 @@
-const hamburgerButton = document.getElementById('hamburgerButton');
-const sections = document.querySelectorAll("section");
-const menuButtons = document.querySelectorAll(".menuButton");
-const menuButtonsMobile = document.querySelectorAll(".menuButtonMobile");
-const mobileMenu = document.getElementById('mobileMenu');
-const footer = document.getElementById("footer");
+import loadProjects from './loadProjects.js';
+import './loadPages.js';
 
-let slideIndex = 0;
+window.addEventListener("DOMContentLoaded", () => {
 
-document.getElementById("currentYear").textContent = new Date().getFullYear();
+    const hamburgerButton = document.getElementById('hamburgerButton');
+    const sections = document.querySelectorAll("section");
+    const menuButtons = document.querySelectorAll(".menuButton");
+    const menuButtonsMobile = document.querySelectorAll(".menuButtonMobile");
+    const mobileMenu = document.getElementById('mobileMenu');
+    const footer = document.getElementById("footer");
 
-document.getElementById("contact").addEventListener("contentUpdated", () => {
+    let slideIndex = 0;
 
-    let emailText;
-    const revealButton = document.getElementById("revealButton");
-    const copyButton = document.getElementById("copyButton");
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-    revealButton.addEventListener("click", () => {
-        const email = "0zoltanmolnar" + String.fromCharCode(64) + "gmail.com";
-        const emailLink = document.createElement("a");
-        emailLink.setAttribute("id", "emailText");
-        emailLink.classList.add("text-gray-400");
-        emailLink.href = "mailto:" + email;
-        emailLink.textContent = email;
-        document.getElementById("emailContainer").appendChild(emailLink);
-        emailText = email;
+    document.getElementById("contact").addEventListener("contentUpdated", () => {
 
-        revealButton.classList.replace("flex", "hidden");
-        copyButton.classList.replace("hidden", "flex");
+
+        let emailText;
+        const revealButton = document.getElementById("revealButton");
+        const copyButton = document.getElementById("copyButton");
+
+        revealButton.addEventListener("click", () => {
+            const email = "0zoltanmolnar" + String.fromCharCode(64) + "gmail.com";
+            const emailLink = document.createElement("a");
+            emailLink.setAttribute("id", "emailText");
+            emailLink.classList.add("text-gray-400");
+            emailLink.href = "mailto:" + email;
+            emailLink.textContent = email;
+            document.getElementById("emailContainer").appendChild(emailLink);
+            emailText = email;
+
+            revealButton.classList.replace("flex", "hidden");
+            copyButton.classList.replace("hidden", "flex");
+
+        });
+
+        copyButton.addEventListener("click", () => {
+            const textCopied = document.getElementById("textCopied");
+            
+            navigator.clipboard.writeText(emailText)
+                .then(() => textCopied.style.display = "flex")
+                .catch(error => console.error("Error copying text:", error));
+        });
 
     });
 
-    copyButton.addEventListener("click", () => {
-        const textCopied = document.getElementById("textCopied");
+    document.getElementById("projects").addEventListener("contentUpdated", () => {
+
+        loadProjects();
         
-        navigator.clipboard.writeText(emailText)
-            .then(() => textCopied.style.display = "flex")
-            .catch(error => console.error("Error copying text:", error));
-    });
+        const slideNext = document.getElementById("slideNext");
+        const slidePrev = document.getElementById("slidePrev");
+        const slides = document.querySelectorAll(".slide");
+        const slideTitle = document.getElementById("projectTitle");
+        const linkGitHub = document.getElementById("linkGitHub");
+        const linkWebsite = document.getElementById("linkWebsite");
 
-});
-
-document.getElementById("projects").addEventListener("contentUpdated", () => {
-    
-    const slideNext = document.getElementById("slideNext");
-    const slidePrev = document.getElementById("slidePrev");
-    const slides = document.querySelectorAll(".slide");
-    const slideTitle = document.getElementById("projectTitle");
-    const linkGitHub = document.getElementById("linkGitHub");
-    const linkWebsite = document.getElementById("linkWebsite");
-
-    slideTitle.textContent = slides[slideIndex].firstElementChild.alt;
-    linkGitHub.setAttribute("href", slides[slideIndex].children[1].textContent);
-    linkWebsite.setAttribute("href", slides[slideIndex].lastElementChild.textContent);
-
-    slideNext.addEventListener("click", () => {
-
-        slides.forEach((slide) => {
-            slide.classList.replace("flex", "hidden");
-        });
-        slideIndex = slideIndex < slides.length - 1 ? slideIndex + 1 : 0;
-        slides[slideIndex].classList.replace("hidden", "flex");
         slideTitle.textContent = slides[slideIndex].firstElementChild.alt;
+        
         linkGitHub.setAttribute("href", slides[slideIndex].children[1].textContent);
+        linkGitHub.setAttribute("target", "_blank");
+
         linkWebsite.setAttribute("href", slides[slideIndex].lastElementChild.textContent);
+        linkWebsite.setAttribute("target", "_blank");
 
-    });
+        slideNext.addEventListener("click", () => {
 
-    slidePrev.addEventListener("click", () => {
+            slides.forEach((slide) => {
+                slide.classList.replace("flex", "hidden");
+            });
+            slideIndex = slideIndex < slides.length - 1 ? slideIndex + 1 : 0;
+            slides[slideIndex].classList.replace("hidden", "flex");
+            slideTitle.textContent = slides[slideIndex].firstElementChild.alt;
+            linkGitHub.setAttribute("href", slides[slideIndex].children[1].textContent);
+            linkWebsite.setAttribute("href", slides[slideIndex].lastElementChild.textContent);
 
-        slides.forEach((slide) => {
-            slide.classList.replace("flex", "hidden");
         });
-        slideIndex = slideIndex > 0 ? slideIndex - 1 : slides.length - 1;
-        slides[slideIndex].classList.replace("hidden", "flex");
-        slideTitle.textContent = slides[slideIndex].firstElementChild.alt;
-        linkGitHub.setAttribute("href", slides[slideIndex].children[1].textContent);
-        linkWebsite.setAttribute("href", slides[slideIndex].lastElementChild.textContent);
+
+        slidePrev.addEventListener("click", () => {
+
+            slides.forEach((slide) => {
+                slide.classList.replace("flex", "hidden");
+            });
+            slideIndex = slideIndex > 0 ? slideIndex - 1 : slides.length - 1;
+            slides[slideIndex].classList.replace("hidden", "flex");
+            slideTitle.textContent = slides[slideIndex].firstElementChild.alt;
+            linkGitHub.setAttribute("href", slides[slideIndex].children[1].textContent);
+            linkWebsite.setAttribute("href", slides[slideIndex].lastElementChild.textContent);
+
+        });
+
+        const svgSlidePrev = `<svg class="slideIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M560.67-213.33 293.33-480.67 560.67-748l74 74-193.34 193.33 193.34 193.34-74 74Z"/></svg>`;
+        const svgSlideNext = `<svg class="slideIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M494.67-480.67 301.33-674l74-74 267.34 267.33-267.34 267.34-74-74 193.34-193.34Z"/></svg>`;
+        let tempDiv = document.createElement('div');
+
+        tempDiv.innerHTML = svgSlidePrev;
+        slidePrev.appendChild(tempDiv.firstChild);
+
+        tempDiv.innerHTML = svgSlideNext;
+        slideNext.appendChild(tempDiv.firstChild);
 
     });
 
-    const svgSlidePrev = `<svg class="slideIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M560.67-213.33 293.33-480.67 560.67-748l74 74-193.34 193.33 193.34 193.34-74 74Z"/></svg>`;
-    const svgSlideNext = `<svg class="slideIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M494.67-480.67 301.33-674l74-74 267.34 267.33-267.34 267.34-74-74 193.34-193.34Z"/></svg>`;
-    let tempDiv = document.createElement('div');
-
-    tempDiv.innerHTML = svgSlidePrev;
-    slidePrev.appendChild(tempDiv.firstChild);
-
-    tempDiv.innerHTML = svgSlideNext;
-    slideNext.appendChild(tempDiv.firstChild);
-
-});
 
 
+    hamburgerButton.addEventListener('click', () => {
 
-hamburgerButton.addEventListener('click', () => {
+        const hamburgerIcon = document.getElementById('hamburgerIcon');
+        const closeIcon = document.getElementById('closeIcon');
+        const navbar = document.getElementById("navbar");
 
-    const hamburgerIcon = document.getElementById('hamburgerIcon');
-    const closeIcon = document.getElementById('closeIcon');
-    const navbar = document.getElementById("navbar");
+        mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle('flex');
+        hamburgerIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
 
-    mobileMenu.classList.toggle('hidden');
-    mobileMenu.classList.toggle('flex');
-    hamburgerIcon.classList.toggle('hidden');
-    closeIcon.classList.toggle('hidden');
-
-    if (hamburgerIcon.classList.contains("hidden")) {
-        navbar.classList.replace("justify-end", "justify-between")
-    }
-    else {
-        navbar.classList.replace("justify-between", "justify-end")
-    }
-
-});
-
-
-
-const observer = new IntersectionObserver(entries => {
-
-    entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-            const lastSection = sections[sections.length-1].id;
-
-            clearMenuButtons(menuButtons);
-            clearMenuButtons(menuButtonsMobile);
-
-            setButtonActive(menuButtons, entry.target.id);
-            setButtonActive(menuButtonsMobile, entry.target.id);
-            // Need to do it for both desktop and mobile in case the user resizes the browser window
-
-
-            footer.style.display = entry.target.id == lastSection ? "flex" : "none"; // This makes the footer only visible in the last section
-
-            if (entry.target.id == lastSection) { // Scroll automatically to the footer  after reaching the last section
-
-                setTimeout(() => {
-                    footer.scrollIntoView({
-                        behavior: "smooth"
-                    });
-                }, 200);
-            }
-
+        if (hamburgerIcon.classList.contains("hidden")) {
+            navbar.classList.replace("justify-end", "justify-between")
         }
-    });
-}, { threshold: 0.5 }); // Adjust threshold as needed (0.5 means 50% visibility)
+        else {
+            navbar.classList.replace("justify-between", "justify-end")
+        }
 
-sections.forEach(section => observer.observe(section));
-
-
-function clearMenuButtons(buttons) { // Make all menu buttons inactive 
-
-    buttons.forEach(button => {
-        button.classList.remove("activeButton");
     });
 
-}
 
-function setButtonActive(buttons, sectionID) { // Adds the activeButton class to the menu button that belongs to the current section
 
-    for (const button of buttons) {
+    const observer = new IntersectionObserver(entries => {
 
-        const menuHref = button.href;
-        if (menuHref.includes(sectionID)) {
-            button.classList.add("activeButton");
-            break;
-        }                
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                const lastSection = sections[sections.length-1].id;
+
+                clearMenuButtons(menuButtons);
+                clearMenuButtons(menuButtonsMobile);
+
+                setButtonActive(menuButtons, entry.target.id);
+                setButtonActive(menuButtonsMobile, entry.target.id);
+                // Need to do it for both desktop and mobile in case the user resizes the browser window
+
+
+                footer.style.display = entry.target.id == lastSection ? "flex" : "none"; // This makes the footer only visible in the last section
+
+                if (entry.target.id == lastSection) { // Scroll automatically to the footer  after reaching the last section
+
+                    setTimeout(() => {
+                        footer.scrollIntoView({
+                            behavior: "smooth"
+                        });
+                    }, 200);
+                }
+
+            }
+        });
+    }, { threshold: 0.5 }); // Adjust threshold as needed (0.5 means 50% visibility)
+
+    sections.forEach(section => observer.observe(section));
+
+
+    function clearMenuButtons(buttons) { // Make all menu buttons inactive 
+
+        buttons.forEach(button => {
+            button.classList.remove("activeButton");
+        });
+
     }
 
-}
+    function setButtonActive(buttons, sectionID) { // Adds the activeButton class to the menu button that belongs to the current section
+
+        for (const button of buttons) {
+
+            const menuHref = button.href;
+            if (menuHref.includes(sectionID)) {
+                button.classList.add("activeButton");
+                break;
+            }                
+        }
+
+    }
+
+
+});
+
